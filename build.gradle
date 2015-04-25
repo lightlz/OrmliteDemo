@@ -22,4 +22,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
+    compile files('src/main/libs/ormlite-android-4.48.jar')
+    compile files('src/main/libs/ormlite-core-4.48.jar')
+    compile files('/Users/light/AndroidStudioProjects/OrmliteDemo/libs/ormlite-android-4.48.jar')
+    compile files('/Users/light/AndroidStudioProjects/OrmliteDemo/libs/ormlite-core-4.48.jar')
 }
