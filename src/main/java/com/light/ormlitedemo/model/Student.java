@@ -12,7 +12,8 @@ import java.io.Serializable;
 @DatabaseTable(tableName="student")
 public class Student implements Serializable {
 
-
+    @DatabaseField(generatedId = true,allowGeneratedIdInsert = true)
+    private int id;
     @DatabaseField(canBeNull = false)
     private int stuId;
     @DatabaseField(canBeNull = false)
@@ -74,5 +75,12 @@ public class Student implements Serializable {
 
     public void setStuGrade(String stuGrade) {
         this.stuGrade = stuGrade;
+    }
+
+
+    @Override
+    public String toString() {
+
+        return stuId +"  " +stuName + "  " +stuAge + "  " +stuSex +"  " +stuGrade +"\n";
     }
 }

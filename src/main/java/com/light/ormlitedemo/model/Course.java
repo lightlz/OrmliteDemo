@@ -12,6 +12,8 @@ import java.io.Serializable;
 @DatabaseTable(tableName = "course")
 public class Course implements Serializable{
 
+    @DatabaseField(generatedId = true,allowGeneratedIdInsert = true)
+    private int id;
     @DatabaseField(canBeNull = false)
     private int courseId;
     @DatabaseField(canBeNull = false)

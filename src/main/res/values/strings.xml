@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="bt_init">初始化数据</string>
+    <string name="bt_update">更新全蛋的性别</string>
+    <string name="bt_delete">删除一条</string>
+
 </resources>

@@ -3,6 +3,7 @@ package com.light.ormlitedemo.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -27,6 +28,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private RuntimeExceptionDao<Course, Integer> simpleCourseDao;
 
+    private static DatabaseHelper helper;
 
     public DatabaseHelper(Context context){
 
@@ -35,7 +37,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     public static DatabaseHelper getHelper(Context context){
 
-        DatabaseHelper helper;
         helper = new DatabaseHelper(context);
         return helper;
     }
@@ -75,6 +76,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
 
         return simpleCourseDao;
+    }
+
+    public static void releaseHelper(){
+        if(helper != null){
+            OpenHelperManager.releaseHelper();
+            helper = null;
+        }
     }
 
 
