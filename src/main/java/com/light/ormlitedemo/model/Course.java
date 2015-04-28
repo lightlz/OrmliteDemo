@@ -12,7 +12,7 @@ import java.io.Serializable;
 @DatabaseTable(tableName = "course")
 public class Course implements Serializable{
 
-    @DatabaseField(generatedId = true,allowGeneratedIdInsert = true)
+    @DatabaseField(generatedId = true,allowGeneratedIdInsert = true,columnName = "cId")
     private int id;
     @DatabaseField(canBeNull = false)
     private int courseId;
@@ -53,5 +53,10 @@ public class Course implements Serializable{
 
     public void setCourseLoc(String courseLoc) {
         this.courseLoc = courseLoc;
+    }
+
+    @Override
+    public String toString() {
+        return  courseName + " 课室 ：" + courseLoc  ;
     }
 }

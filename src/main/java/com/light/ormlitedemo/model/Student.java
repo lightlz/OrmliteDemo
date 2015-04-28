@@ -12,7 +12,8 @@ import java.io.Serializable;
 @DatabaseTable(tableName="student")
 public class Student implements Serializable {
 
-    @DatabaseField(generatedId = true,allowGeneratedIdInsert = true)
+
+    @DatabaseField(generatedId = true,allowGeneratedIdInsert = true,columnName = "sId")
     private int id;
     @DatabaseField(canBeNull = false)
     private int stuId;
@@ -24,6 +25,7 @@ public class Student implements Serializable {
     private String stuSex;
     @DatabaseField(defaultValue = "one")
     private String stuGrade;
+
 
     public Student() {
 

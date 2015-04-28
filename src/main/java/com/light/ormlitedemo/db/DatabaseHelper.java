@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.RuntimeExceptionDao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.light.ormlitedemo.model.Course;
+import com.light.ormlitedemo.model.StuCourseRelate;
 import com.light.ormlitedemo.model.Student;
 
 import java.sql.SQLException;
@@ -28,11 +29,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private RuntimeExceptionDao<Course, Integer> simpleCourseDao;
 
+    private RuntimeExceptionDao<StuCourseRelate, Integer> simpleStuCourseDao;
+
+
     private static DatabaseHelper helper;
 
     public DatabaseHelper(Context context){
-
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+      super(context,DATABASE_NAME,null,DATABASE_VERSION);
     }
 
     public static DatabaseHelper getHelper(Context context){
@@ -48,16 +51,27 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
             TableUtils.createTable(connectionSource, Student.class);
             TableUtils.createTable(connectionSource,Course.class);
+            TableUtils.createTable(connectionSource,StuCourseRelate.class);
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource, int i, int i2) {
 
+        try {
+
+            TableUtils.dropTable(connectionSource, Student.class, true);
+            TableUtils.dropTable(connectionSource, Course.class, true);
+            TableUtils.dropTable(connectionSource, StuCourseRelate.class, true);
+
+            onCreate(sqLiteDatabase, connectionSource);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public RuntimeExceptionDao<Student, Integer> getSimpleStudentDao() {
@@ -77,6 +91,17 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
         return simpleCourseDao;
     }
+
+    public RuntimeExceptionDao<StuCourseRelate, Integer> getSimpleStuCourseDao() {
+
+        if (simpleStuCourseDao == null) {
+            simpleStuCourseDao = getRuntimeExceptionDao(StuCourseRelate.class);
+        }
+
+        return simpleStuCourseDao;
+    }
+
+
 
     public static void releaseHelper(){
         if(helper != null){
