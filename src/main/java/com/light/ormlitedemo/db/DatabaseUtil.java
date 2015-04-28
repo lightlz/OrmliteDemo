@@ -121,40 +121,30 @@ public class DatabaseUtil {
      * @throws SQLException
      */
     public static List<Course> queryCourse(Context context,Student student) throws SQLException {
-
         List<Course> list = null;
-
-
         RuntimeExceptionDao<StuCourseRelate, Integer> simpleStuCourseDao = DatabaseHelper.getHelper(context)
                 .getSimpleStuCourseDao();
-
         RuntimeExceptionDao<Course, Integer> simpleCourseDao = DatabaseHelper.getHelper(context)
                 .getSimpleCourseDao();
-
         /**
          select * from `course` where `cId` in {
             select `cId` from `student_courses` where `sId` = ?
          }
          **/
-
         //内
         QueryBuilder<StuCourseRelate, Integer> stuCourseQueryBuilder = simpleStuCourseDao.queryBuilder();
         //select column : cId
         stuCourseQueryBuilder.selectColumns("cId");
-
         //where sId = ?
         SelectArg userSelectArg = new SelectArg();
         stuCourseQueryBuilder.where().eq("sId", userSelectArg);
-
         //外
         QueryBuilder<Course, Integer> couseBuilder = simpleCourseDao.queryBuilder();
         //where in
         PreparedQuery<Course> qurey = couseBuilder.where().in("cId",stuCourseQueryBuilder).prepare();
         //index of the holder
         qurey.setArgumentHolderValue(0,student);
-
         list = simpleCourseDao.query(qurey);
-
         return list;
     }
 }
